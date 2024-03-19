@@ -4,12 +4,14 @@ import java.util.regex.Pattern;
 
 public class PersonalCodeValidator {
 
-    private static final String PERSONAL_CODE_REGX = "^(([3-6]\\d)(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])|([3-6]\\d)(24)(0[1-3])(0[1-9]|[12]\\d|3[01]))\\d{6}$";
+    //   private static final String PERSONAL_CODE_REGX = "^[3-6]\\d{10}$";
+    private static final String PERSONAL_CODE_REGX = "^[3-6][0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])\\d{4}$";
+
 
     public static String printData(String personalCode) {
         String result;
-        if (isValidPersonalCode(personalCode, PERSONAL_CODE_REGX)) {
-            result = "This personal code belongs to " + determineGender(personalCode) + "who was born in " + determineBirthYear(personalCode);
+        if (isValidPersonalCode(personalCode)) {
+            result = "This personal code belongs to " + determineGender(personalCode).gender + " who was born in " + determineBirthYear(personalCode);
 
         } else {
             result = "Invalid Lithuanian personal code.";
@@ -17,8 +19,8 @@ public class PersonalCodeValidator {
         return result;
     }
 
-    public static boolean isValidPersonalCode(String personalCode, String regex) {
-        return Pattern.compile(regex)
+    public static boolean isValidPersonalCode(String personalCode) {
+        return Pattern.compile(PERSONAL_CODE_REGX)
                 .matcher(personalCode)
                 .matches();
     }
